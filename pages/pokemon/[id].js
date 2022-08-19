@@ -16,6 +16,10 @@ export default function Details() {
         }
         if (id) getPokemon();
     }, [id])
+    /*
+    Nextjs always tries to be SSR'ing this page by default. 
+    To cicumvent that and wait till we're on the client we can design the logic such that We're working around that to tell it not until we have fetched the data on client-side from the S3 bucket.
+    */
     if (!pokemon) return null
 
     return (
@@ -46,7 +50,6 @@ export default function Details() {
                         ))}
                     </tbody>
                 </table>
-
             </div>
         </div>
     )
