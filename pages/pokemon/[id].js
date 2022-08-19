@@ -1,27 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../../styles/Details.module.css'
 import { useRouter } from 'next/router'
 
-export default function Details() {
-    const { query: { id } } = useRouter();
-    const [pokemon, setPokemon] = useState(null)
+export async function getServerSideProps({ params }) {
+    const resp = await fetch(`https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${params.id}.json`)
 
-    useEffect(() => {
-        async function getPokemon() {
-            const resp = await fetch(`https://jherr-pokemon.s3.us-west-1.amazonaws.com/pokemon/${id}.json`)
-            setPokemon(await resp.json())
+    return {
+        props: {
+            pokemon: await resp.json()
         }
-        if (id) getPokemon();
-    }, [id])
-    /*
-    Nextjs always tries to be SSR'ing this page by default. 
-    To cicumvent that and wait till we're on the client we can design the logic such that We're working around that to tell it not until we have fetched the data on client-side from the S3 bucket.
-    */
-    if (!pokemon) return null
+    }
+}
 
+/*
+Nextjs always tries to be SSR'ing this page by default. 
+To cicumvent that and wait till we're on the client we can design the logic such that We're working around that to tell it not until we have fetched the data on client-side from the S3 bucket.
+*/
+
+export default function Details({ pokemon }) {
     return (
         <div>
             <Head>
