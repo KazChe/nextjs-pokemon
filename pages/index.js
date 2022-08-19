@@ -4,13 +4,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
-/* 1 
-  We're going to start here by adding an async function
-  and use getServerSideProps that runs only on server-side at request time
-  the page will be pre-rendered with the returned 'props'
-  See more: https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
-*/
-export async function getServerSideProps(context) {
+
+export async function getStaticProps(context) {
   const resp = await fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json")
 
   return {
@@ -20,10 +15,6 @@ export async function getServerSideProps(context) {
   }
 }
 
-/* 2
- So, now pass pokemon returnded from server-side
- and get rid of all the client-side code
-*/
 export default function Home({ pokemon }) {
   return (
     <div className={styles.container}>
