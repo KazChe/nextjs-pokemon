@@ -5,6 +5,7 @@ import Link from 'next/link'
 import styles from '../../styles/Details.module.css'
 import { useRouter } from 'next/router'
 
+// SSG - Static Site Generation
 export async function getStaticPaths() {
     const resp = await fetch("https://jherr-pokemon.s3.us-west-1.amazonaws.com/index.json")
     const pokemon = await resp.json()
@@ -23,7 +24,8 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             pokemon: await resp.json()
-        }
+        },
+        revalidate: 30 //in seconds - for SSG, in order to get data change we need to set an interval to check for any data change.
     }
 }
 
