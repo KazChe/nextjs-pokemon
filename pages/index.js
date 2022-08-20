@@ -22,6 +22,7 @@ export default function Home({ pokemon }) {
         <title>Pokemon List</title>
       </Head>
       <div className={styles.grid}>
+        <h1>For my Cyrus</h1>
         {pokemon.map((pokemon) => (
           <div className={styles.card} key={pokemon.id}>
             <Link href={`/pokemon/${pokemon.id}`}>

@@ -25,7 +25,7 @@ export async function getStaticProps({ params }) {
         props: {
             pokemon: await resp.json()
         },
-        revalidate: 30 //in seconds - for SSG, in order to get data change we need to set an interval to check for any data change.
+        revalidate: 30 //in seconds - for SSG, in order to get data change we need to set an interval to check for any data change. You have to have someting  like having an S3 mounted on your deployable
     }
 }
 
